@@ -1,8 +1,10 @@
+
 import pdfkit
 
-# ✅ Windows path to wkhtmltopdf.exe
-PDFKIT_PATH = r"C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe"
+# Linux path inside Docker container
+PDFKIT_PATH = "/usr/bin/wkhtmltopdf"
 config = pdfkit.configuration(wkhtmltopdf=PDFKIT_PATH)
+
 
 from flask import Flask, render_template, request, redirect, url_for, session, make_response
 from datetime import datetime

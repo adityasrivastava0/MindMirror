@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MindMirror PDF Report</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; padding: 20px; }
+        .header { text-align: center; margin-bottom: 30px; }
+        .header h1 { color: #6b46c1; }
+        .result-section { margin-bottom: 20px; }
+        .score { font-size: 24px; font-weight: bold; text-align: center; }
+        .level { font-size: 20px; text-align: center; margin: 10px 0; }
+        .analysis { background-color: #fef9c3; padding: 15px; border-radius: 5px; }
+        ul { margin-left: 20px; }
+        .footer { margin-top: 30px; font-size: 12px; text-align: center; color: gray; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>MindMirror Assessment Results</h1>
+        <p>Generated on {{ now.strftime('%Y-%m-%d %H:%M:%S') }}</p>
+    </div>
+    
+    <div class="result-section">
+        <div class="score">Your Score: {{ score }}/42</div>
+        <div class="level">
+            Result: {{ level }} 
+            {% if level == 'Normal' %}(✅){% elif level == 'Mild' %}(⚠️){% else %}(🔴){% endif %}
+        </div>
+    </div>
+    
+    {% if analysis %}
+    <div class="result-section analysis">
+        <h2>Pattern Analysis</h2>
+        <ul>
+            {% for item in analysis %}
+            <li>{{ item }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+    
+    <div class="result-section">
+        <h2>Recommendations</h2>
+        <ul>
+            {% for suggestion in suggestions %}
+            <li>{{ suggestion }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    
+    <div class="footer">
+        <p>© 2025 MindMirror. This is not a substitute for professional advice.</p>
+        <p>If you're in crisis, please contact a mental health professional immediately.</p>
+    </div>
+</body>
+</html>

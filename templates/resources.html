@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}Mental Health Resources{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto">
+    <h1 class="text-3xl font-bold text-center text-gray-800 mb-12">Mental Health Resources</h1>
+    
+    <div class="space-y-8">
+        <section class="bg-white rounded-xl shadow-md overflow-hidden p-6">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-4">Self-Care Strategies</h2>
+            <ul class="list-disc pl-5 space-y-2">
+                <li><strong>Mindfulness:</strong> Practice 5-10 minutes of meditation daily</li>
+                <li><strong>Sleep Hygiene:</strong> Maintain consistent sleep schedule</li>
+                <li><strong>Physical Activity:</strong> 30 minutes of movement daily</li>
+                <li><strong>Social Connection:</strong> Reach out to one person daily</li>
+                <li><strong>Journaling:</strong> Write about your thoughts and feelings</li>
+            </ul>
+        </section>
+        
+        <section class="bg-white rounded-xl shadow-md overflow-hidden p-6">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-4">Crisis Support</h2>
+            <div class="space-y-4">
+                <div class="p-4 bg-red-50 rounded-lg">
+                    <h3 class="font-bold text-red-800">If you're in immediate crisis:</h3>
+                    <p>Call your local emergency number or go to the nearest hospital</p>
+                </div>
+                <div>
+                    <h3 class="font-bold">United States:</h3>
+                    <p>National Suicide Prevention Lifeline: <span class="font-mono">988</span></p>
+                    <p>Crisis Text Line: Text <span class="font-mono">HOME</span> to <span class="font-mono">741741</span></p>
+                </div>
+                <div>
+                    <h3 class="font-bold">International:</h3>
+                    <p>Find your local crisis line at <a href="https://www.iasp.info/resources/Crisis_Centres/" class="text-purple-600 underline">IASP</a></p>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+{% endblock %}

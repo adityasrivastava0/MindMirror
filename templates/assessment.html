@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Mental Health Assessment{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto bg-white rounded-xl shadow-md p-6">
+    <h1 class="text-2xl font-bold text-gray-800 mb-6">Mental Health Assessment</h1>
+    
+    <form method="POST" action="{{ url_for('assessment') }}">
+        <div class="space-y-8">
+            {% for question in questions %}
+            <div class="border-b pb-6">
+                <p class="text-lg font-medium mb-4">{{ loop.index }}. {{ question }}</p>
+                
+                <div class="space-y-3">
+                    <label class="flex items-center space-x-3">
+                        <input type="radio" name="q{{ loop.index0 }}" value="0" class="h-4 w-4" required>
+                        <span>Not at all</span>
+                    </label>
+                    <label class="flex items-center space-x-3">
+                        <input type="radio" name="q{{ loop.index0 }}" value="1" class="h-4 w-4">
+                        <span>Several days</span>
+                    </label>
+                    <label class="flex items-center space-x-3">
+                        <input type="radio" name="q{{ loop.index0 }}" value="2" class="h-4 w-4">
+                        <span>More than half the days</span>
+                    </label>
+                    <label class="flex items-center space-x-3">
+                        <input type="radio" name="q{{ loop.index0 }}" value="3" class="h-4 w-4">
+                        <span>Nearly every day</span>
+                    </label>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <div class="mt-8 p-4 bg-gray-100 rounded-lg">
+            <label class="flex items-center space-x-3">
+                <input type="checkbox" name="save_results" class="h-4 w-4">
+                <span>Save my results anonymously for research (optional)</span>
+            </label>
+        </div>
+        
+        <button type="submit" class="mt-6 w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-4 rounded-lg transition">
+            Get Results
+        </button>
+    </form>
+</div>
+{% endblock %}

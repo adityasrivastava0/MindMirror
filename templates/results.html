@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}Your Results{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto bg-white rounded-xl shadow-md overflow-hidden">
+    <div class="p-8">
+        <h1 class="text-3xl font-bold text-center text-gray-800 mb-8">Your Assessment Results</h1>
+        
+        <div class="mb-8 text-center">
+            <p class="text-lg mb-2">Your total score:</p>
+            <p class="text-4xl font-bold mb-4">{{ score }} <span class="text-gray-500">/ 42</span></p>
+            <p class="text-2xl font-semibold 
+                     {% if level == 'Normal' %}text-green-600
+                     {% elif level == 'Mild' %}text-yellow-600
+                     {% elif level == 'Moderate' %}text-orange-600
+                     {% else %}text-red-600{% endif %}">
+                {{ level }} 
+                {% if level == 'Normal' %}✅
+                {% elif level == 'Mild' %}⚠️
+                {% else %}🔴{% endif %}
+            </p>
+        </div>
+        
+        {% if analysis %}
+        <div class="mb-8 bg-yellow-50 p-4 rounded-lg">
+            <h2 class="text-xl font-semibold text-gray-800 mb-2">Pattern Analysis</h2>
+            <ul class="list-disc pl-5 space-y-1">
+                {% for item in analysis %}
+                <li>{{ item }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+        
+        <div class="mb-8">
+            <h2 class="text-xl font-semibold text-gray-800 mb-4">Recommendations</h2>
+            <ul class="list-disc pl-5 space-y-2">
+                {% for suggestion in suggestions %}
+                <li>{{ suggestion }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        
+        <div class="border-t pt-6">
+            <h2 class="text-xl font-semibold text-gray-800 mb-4">Next Steps</h2>
+            <p class="mb-4">Explore our resources for self-care tips and professional support options.</p>
+            <a href="{{ url_for('resources') }}" class="inline-block bg-purple-600 hover:bg-purple-700 text-white font-medium py-2 px-6 rounded-lg transition">
+                View Resources
+            </a>
+            <div class="mt-6 text-center">
+    <a href="{{ url_for('download_pdf') }}" class="inline-block bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-6 rounded-lg transition">
+        Download PDF Report
+    </a>
+</div>
+        </div>
+    </div>
+</div>
+{% endblock %}

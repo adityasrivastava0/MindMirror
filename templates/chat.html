@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}AI Chat Support{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto bg-white rounded-xl shadow-md p-6">
+    <h1 class="text-2xl font-bold mb-4">Mental Health Chat Support</h1>
+
+    <form method="POST">
+        <textarea name="message" rows="4" class="w-full border rounded-lg p-2" placeholder="Write your question..."></textarea>
+        <button type="submit" class="mt-4 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg">Ask</button>
+    </form>
+
+    {% if response %}
+    <div class="mt-6 bg-green-50 p-4 rounded-lg">
+        <h2 class="font-semibold">AI Response:</h2>
+        <p>{{ response }}</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

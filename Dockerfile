@@ -4,10 +4,12 @@ FROM python:3.10-slim
 # Install system dependencies for wkhtmltopdf
 RUN apt-get update && \
     apt-get install -y \
+    build-essential \
     wkhtmltopdf \
     libxrender1 \
     libxext6 \
     libfontconfig1 \
+    libfreetype6 \
     libjpeg-dev \
     libpng-dev && \
     apt-get clean
@@ -15,14 +17,14 @@ RUN apt-get update && \
 # Set working directory
 WORKDIR /app
 
-# Copy everything
+# Copy all files
 COPY . .
 
-# Install Python dependencies
+# Install Python packages
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Expose the port
+# Expose port for Flask
 EXPOSE 5000
 
-# Start the Flask app
-CMD ["gunicorn", "-b", "0.0.0.0:5000", "app:app"]
+# Run the app with Gunicorn
+CMD ["gunicorn", "--bind", "0.0.0.0:5000", "app:app"]

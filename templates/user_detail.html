@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}User Details{% endblock %}
+{% block content %}
+<a href="{{ url_for('admin.admin_dashboard') }}" class="text-blue-600 underline mb-4 inline-block">&larr; Back to Dashboard</a>
+<div class="bg-white p-6 rounded shadow mb-6">
+    <h2 class="text-xl font-bold mb-2">User: {{ user[1] }} (ID: {{ user[0] }})</h2>
+    <p class="mb-2"><strong>Email:</strong> {{ user[2] }}</p>
+    <a href="{{ url_for('admin.reset_password', user_id=user[0]) }}" class="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600 text-sm">Reset Password</a>
+</div>
+<div class="bg-white p-6 rounded shadow">
+    <h3 class="font-semibold mb-2">Assessment History</h3>
+    <table class="min-w-full">
+        <thead>
+            <tr>
+                <th class="py-2 px-4">Assessment ID</th>
+                <th class="py-2 px-4">Score</th>
+                <th class="py-2 px-4">Level</th>
+                <th class="py-2 px-4">Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for a in assessments %}
+            <tr class="border-t">
+                <td class="py-2 px-4">{{ a[0] }}</td>
+                <td class="py-2 px-4">{{ a[1] }}</td>
+                <td class="py-2 px-4">{{ a[2] }}</td>
+                <td class="py-2 px-4">{{ a[3] }}</td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="4" class="py-2 px-4 text-center">No assessments found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -7,6 +7,7 @@ import pdfkit
 from werkzeug.security import generate_password_hash, check_password_hash
 from dotenv import load_dotenv
 import google.generativeai as genai
+from admin_routes import admin_bp
 
 # --------- Load .env ---------
 load_dotenv()
@@ -22,6 +23,7 @@ config = pdfkit.configuration(wkhtmltopdf=PDFKIT_PATH)
 # --------- Flask App ---------
 app = Flask(__name__)
 app.secret_key = 'your_secret_key_here'
+app.register_blueprint(admin_bp)
 
 # --------- Init Database ---------
 def init_db():
@@ -47,6 +49,22 @@ def init_db():
                 )
             ''')
             conn.commit()
+
+def init_admin_db():
+    with sqlite3.connect('mindmirror.db') as conn:
+        c = conn.cursor()
+        c.execute('''
+            CREATE TABLE IF NOT EXISTS admins (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                username TEXT UNIQUE NOT NULL,
+                password TEXT NOT NULL
+            )
+        ''')
+        # Insert default admin if not exists
+        c.execute("SELECT * FROM admins WHERE username = ?", ('admin',))
+        if not c.fetchone():
+            c.execute("INSERT INTO admins (username, password) VALUES (?, ?)", ('admin', generate_password_hash('admin123')))
+        conn.commit()
 
 # --------- Questions ---------
 QUESTIONS = [
@@ -261,4 +279,5 @@ def mood():
 # --------- Run App ---------
 if __name__ == '__main__':
     init_db()
+    init_admin_db()
     app.run(debug=True)

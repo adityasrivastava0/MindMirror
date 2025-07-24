@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Admin Dashboard{% endblock %}
+{% block content %}
+<div class="flex flex-col md:flex-row md:justify-between items-center mb-6">
+    <h2 class="text-2xl font-bold mb-4 md:mb-0">Admin Dashboard</h2>
+    <a href="{{ url_for('admin.admin_logout') }}" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Logout</a>
+</div>
+<div class="overflow-x-auto">
+<table class="min-w-full bg-white shadow rounded">
+    <thead>
+        <tr>
+            <th class="py-2 px-4">ID</th>
+            <th class="py-2 px-4">Name</th>
+            <th class="py-2 px-4">Email</th>
+            <th class="py-2 px-4">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for user in users %}
+        <tr class="border-t">
+            <td class="py-2 px-4">{{ user[0] }}</td>
+            <td class="py-2 px-4">{{ user[1] }}</td>
+            <td class="py-2 px-4">{{ user[2] }}</td>
+            <td class="py-2 px-4 flex flex-col md:flex-row gap-2">
+                <a href="{{ url_for('admin.user_detail', user_id=user[0]) }}" class="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600 text-xs">View</a>
+                <a href="{{ url_for('admin.reset_password', user_id=user[0]) }}" class="bg-yellow-500 text-white px-2 py-1 rounded hover:bg-yellow-600 text-xs">Reset Password</a>
+                <form method="post" action="{{ url_for('admin.delete_user', user_id=user[0]) }}" onsubmit="return confirm('Delete this user?');" class="inline">
+                    <button type="submit" class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 text-xs">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</div>
+{% endblock %}

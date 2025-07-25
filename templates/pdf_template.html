@@ -1,57 +1,109 @@
+<!-- filepath: e:\Mindmirror python full stack\templates\results_pdf.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>MindMirror PDF Report</title>
+    <title>MindMirror Assessment Report</title>
     <style>
-        body { font-family: Arial, sans-serif; line-height: 1.6; padding: 20px; }
-        .header { text-align: center; margin-bottom: 30px; }
-        .header h1 { color: #6b46c1; }
-        .result-section { margin-bottom: 20px; }
-        .score { font-size: 24px; font-weight: bold; text-align: center; }
-        .level { font-size: 20px; text-align: center; margin: 10px 0; }
-        .analysis { background-color: #fef9c3; padding: 15px; border-radius: 5px; }
-        ul { margin-left: 20px; }
-        .footer { margin-top: 30px; font-size: 12px; text-align: center; color: gray; }
+        body {
+            font-family: 'Nunito', 'Poppins', 'Inter', sans-serif;
+            background: linear-gradient(135deg, #B3E5FC 0%, #D1C4E9 50%, #FFF8E1 100%);
+            color: #333;
+        }
+        .container {
+            max-width: 700px;
+            margin: 40px auto;
+            background: #fff;
+            border-radius: 24px;
+            box-shadow: 0 4px 24px #B3E5FC44;
+            padding: 40px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+        .headline {
+            font-size: 2.2rem;
+            color: #5C6BC0;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        .subline {
+            font-size: 1.1rem;
+            color: #A5D6A7;
+            margin-bottom: 24px;
+        }
+        .section-title {
+            font-size: 1.2rem;
+            color: #5C6BC0;
+            font-weight: 600;
+            margin-top: 32px;
+            margin-bottom: 12px;
+        }
+        .score-circle {
+            width: 90px; height: 90px; border-radius: 50%;
+            background: linear-gradient(135deg, #A5D6A7, #FFF8E1);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 2.5rem; color: #5C6BC0; font-weight: bold;
+            margin: 0 auto 12px auto;
+        }
+        .level-label {
+            font-size: 1.1rem; color: #5C6BC0; font-weight: 600; text-align: center; margin-bottom: 8px;
+        }
+        .ai-box {
+            background: #B3E5FC33; border-radius: 12px; padding: 16px; margin-bottom: 16px;
+        }
+        .suggestion-list { margin: 0; padding: 0; list-style: none; }
+        .suggestion-list li {
+            background: #C8E6C9; color: #5C6BC0; border-radius: 8px;
+            padding: 10px 16px; margin-bottom: 8px;
+        }
+        .footer {
+            text-align: center; color: #999; font-size: 0.95rem; margin-top: 40px;
+        }
+        .user-box {
+            background: #F8BBD0; border-radius: 12px; padding: 12px 18px; margin-bottom: 18px;
+            color: #5C6BC0; font-weight: 500; font-size: 1.1rem;
+        }
     </style>
 </head>
 <body>
-    <div class="header">
-        <h1>MindMirror Assessment Results</h1>
-        <p>Generated on {{ now.strftime('%Y-%m-%d %H:%M:%S') }}</p>
-    </div>
-    
-    <div class="result-section">
-        <div class="score">Your Score: {{ score }}/42</div>
-        <div class="level">
-            Result: {{ level }} 
-            {% if level == 'Normal' %}(✅){% elif level == 'Mild' %}(⚠️){% else %}(🔴){% endif %}
+    <div class="container">
+        <div class="header">
+            <img src="https://www.svgrepo.com/show/499964/cloud.svg" alt="Clouds" width="60" style="opacity:0.8;">
+            <div class="headline">MindMirror Assessment Report</div>
+            <div class="subline">Date: {{ now.strftime('%d %b %Y, %I:%M %p') }}</div>
         </div>
-    </div>
-    
-    {% if analysis %}
-    <div class="result-section analysis">
-        <h2>Pattern Analysis</h2>
-        <ul>
-            {% for item in analysis %}
-            <li>{{ item }}</li>
-            {% endfor %}
-        </ul>
-    </div>
-    {% endif %}
-    
-    <div class="result-section">
-        <h2>Recommendations</h2>
-        <ul>
-            {% for suggestion in suggestions %}
-            <li>{{ suggestion }}</li>
-            {% endfor %}
-        </ul>
-    </div>
-    
-    <div class="footer">
-        <p>© 2025 MindMirror. This is not a substitute for professional advice.</p>
-        <p>If you're in crisis, please contact a mental health professional immediately.</p>
+        <div class="user-box">
+            <strong>Name:</strong> {{ user_name }}<br>
+            <strong>Email:</strong> {{ user_email }}
+        </div>
+        <div>
+            <div class="section-title">Assessment Summary</div>
+            <div class="score-circle">{{ score }}</div>
+            <div class="level-label">{{ level }}</div>
+            <p style="text-align:center; color:#5C6BC0;">
+                {% if level == 'Normal' %}You are in a calm zone. Keep up your self-care!{% elif level == 'Mild' %}Mild concern. Consider gentle self-care and support.{% elif level == 'Moderate' %}Moderate concern. Consider talking to someone you trust.{% else %}High concern. Please reach out for professional help.{% endif %}
+            </p>
+        </div>
+        <div>
+            <div class="section-title">AI Insight</div>
+            <div class="ai-box">{{ analysis[0] }}</div>
+        </div>
+        <div>
+            <div class="section-title">Personalized Suggestions</div>
+            <ul class="suggestion-list">
+                {% for suggestion in suggestions %}
+                <li>{{ suggestion }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="footer">
+            This report is generated for your personal reflection.<br>
+            MindMirror is not a substitute for professional help.<br>
+            <br>
+            <strong>Share your story, inspire hope.</strong>
+        </div>
     </div>
 </body>
 </html>

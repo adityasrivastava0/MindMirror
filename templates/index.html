@@ -1,27 +1,51 @@
 {% extends "base.html" %}
 
-{% block title %}Mental Health Assessment{% endblock %}
+{% block title %}Mental Health Assessment | MindMirror{% endblock %}
 
 {% block content %}
-<div class="max-w-3xl mx-auto text-center py-12">
-    <h1 class="text-4xl font-bold text-purple-800 mb-6">MindMirror</h1>
-    <p class="text-xl text-gray-700 mb-8">
-        A confidential mental health assessment based on clinically validated questions
+<div class="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-pink-50 py-14 px-4">
+  <div class="max-w-3xl mx-auto text-center">
+    <img src="{{ url_for('static', filename='lotus-calm.svg') }}" alt="MindMirror Logo" class="w-20 h-20 mx-auto mb-5 animate-pulse-slow">
+
+    <h1 class="text-5xl font-extrabold text-purple-800 mb-3 font-[Nunito]">Welcome to MindMirror</h1>
+    
+    <p class="text-lg text-gray-700 font-light mb-8">
+      Take a moment for yourself. This safe and confidential check-in supports your emotional well-being.
     </p>
-    
-    <div class="bg-white rounded-lg shadow-lg p-8 mb-12 text-left">
-        <h2 class="text-2xl font-semibold text-gray-800 mb-4">About the Assessment</h2>
-        <p class="mb-4">Our assessment uses the standard PHQ-9 depression screening questions plus additional questions about loneliness and stress factors.</p>
-        <p>The process takes about 5 minutes and provides:</p>
-        <ul class="list-disc pl-5 mt-2 space-y-1">
-            <li>Immediate results with severity level</li>
-            <li>Personalized suggestions</li>
-            <li>Pattern analysis of your answers</li>
-        </ul>
+
+    <div class="bg-white rounded-2xl shadow-lg p-8 text-left mb-10 border border-purple-100">
+      <h2 class="text-2xl font-semibold text-purple-700 mb-4 flex items-center gap-2">
+        🌿 What to Expect
+      </h2>
+      <p class="mb-3 text-gray-700">
+        This tool is based on the PHQ-9 method, extended to track your emotional state, loneliness, and stress.
+      </p>
+      <p class="mb-3 text-gray-700">Takes less than <strong>5 minutes</strong> and provides:</p>
+      <ul class="list-disc pl-6 space-y-2 text-gray-800">
+        <li>💡 Personalized emotional wellness score</li>
+        <li>🎯 Tailored mental health suggestions</li>
+        <li>📈 Insights and trends from your responses</li>
+      </ul>
     </div>
-    
-    <a href="{{ url_for('assessment') }}" class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-8 rounded-full text-lg transition inline-block">
-        Start Assessment
+
+    <a href="{{ url_for('assessment') }}"
+      class="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-10 rounded-full text-lg transition-all shadow-md hover:shadow-xl animate-glow-slow">
+      🧠 Start Assessment
     </a>
+  </div>
 </div>
+
+<style>
+@keyframes glow {
+  0% { box-shadow: 0 0 0px rgba(147, 51, 234, 0.3); }
+  50% { box-shadow: 0 0 15px rgba(147, 51, 234, 0.5); }
+  100% { box-shadow: 0 0 0px rgba(147, 51, 234, 0.3); }
+}
+.animate-glow-slow {
+  animation: glow 3s ease-in-out infinite;
+}
+.animate-pulse-slow {
+  animation: pulse 4s ease-in-out infinite;
+}
+</style>
 {% endblock %}

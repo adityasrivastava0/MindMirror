@@ -1,37 +1,82 @@
 {% extends "base.html" %}
 {% block title %}Assessment{% endblock %}
+
 {% block content %}
-<div class="max-w-2xl mx-auto bg-white rounded-xl shadow-md p-6">
-    <h1 class="text-2xl font-bold text-gray-800 mb-6">Mental Health Assessment</h1>
-    <form method="POST">
-        <div class="space-y-8">
+<div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-100 via-indigo-100 to-pink-100 px-4 py-12">
+    <div class="w-full max-w-xl bg-white p-8 rounded-3xl shadow-xl relative overflow-hidden">
+
+        <!-- Progress bar -->
+        <div class="w-full bg-gray-200 h-2 rounded-full mb-8">
+            <div id="progressBar" class="bg-purple-500 h-2 rounded-full transition-all duration-300" style="width: 0%"></div>
+        </div>
+
+        <form method="POST" id="assessmentForm">
             {% for question in questions %}
-            <div class="border-b pb-6">
-                <p class="text-lg font-medium mb-4">{{ loop.index }}. {{ question }}</p>
-                <div class="space-y-3">
-                    <label class="flex items-center space-x-3">
-                        <input type="radio" name="q{{ loop.index0 }}" value="0" class="h-4 w-4" required>
-                        <span>Not at all</span>
+            <div class="question-step" {% if not loop.first %}style="display: none;"{% endif %}>
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">{{ loop.index }}. {{ question }}</h2>
+                <div class="space-y-4">
+                    {% set options = ['Not at all', 'Several days', 'More than half the days', 'Nearly every day'] %}
+                    {% for option in options %}
+                    <label class="flex items-center space-x-3 p-3 bg-purple-50 rounded-lg hover:bg-purple-100 transition">
+                        <input type="radio" name="q{{ loop.index0 }}" value="{{ loop.index0 }}" class="h-4 w-4 text-purple-600" required>
+                        <span class="text-gray-800">{{ option }}</span>
                     </label>
-                    <label class="flex items-center space-x-3">
-                        <input type="radio" name="q{{ loop.index0 }}" value="1" class="h-4 w-4">
-                        <span>Several days</span>
-                    </label>
-                    <label class="flex items-center space-x-3">
-                        <input type="radio" name="q{{ loop.index0 }}" value="2" class="h-4 w-4">
-                        <span>More than half the days</span>
-                    </label>
-                    <label class="flex items-center space-x-3">
-                        <input type="radio" name="q{{ loop.index0 }}" value="3" class="h-4 w-4">
-                        <span>Nearly every day</span>
-                    </label>
+                    {% endfor %}
+                </div>
+                <div class="flex justify-between mt-8">
+                    <button type="button" class="prev-btn text-purple-600 hover:underline" {% if loop.first %}style="visibility: hidden;"{% endif %}>← Back</button>
+                    <button type="button" class="next-btn bg-purple-600 text-white px-6 py-2 rounded-full hover:bg-purple-700 transition">
+                        {% if loop.last %}Submit{% else %}Next →{% endif %}
+                    </button>
                 </div>
             </div>
             {% endfor %}
-        </div>
-        <button type="submit" class="mt-6 w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-4 rounded-lg transition">
-            Get Results
-        </button>
-    </form>
+        </form>
+    </div>
 </div>
+
+<script>
+    const steps = document.querySelectorAll('.question-step');
+    const nextBtns = document.querySelectorAll('.next-btn');
+    const prevBtns = document.querySelectorAll('.prev-btn');
+    const progressBar = document.getElementById('progressBar');
+
+    let currentStep = 0;
+
+    function showStep(index) {
+        steps.forEach((step, i) => {
+            step.style.display = i === index ? 'block' : 'none';
+        });
+        progressBar.style.width = ((index + 1) / steps.length * 100) + '%';
+    }
+
+    nextBtns.forEach((btn, i) => {
+        btn.addEventListener('click', () => {
+            const currentRadios = steps[i].querySelectorAll('input[type="radio"]');
+            const checked = Array.from(currentRadios).some(r => r.checked);
+
+            if (!checked) {
+                alert('Please select an option before proceeding.');
+                return;
+            }
+
+            if (i === steps.length - 1) {
+                document.getElementById('assessmentForm').submit();
+            } else {
+                currentStep++;
+                showStep(currentStep);
+            }
+        });
+    });
+
+    prevBtns.forEach((btn, i) => {
+        btn.addEventListener('click', () => {
+            currentStep--;
+            showStep(currentStep);
+        });
+    });
+
+    // Initialize first step
+    showStep(0);
+</script>
 {% endblock %}

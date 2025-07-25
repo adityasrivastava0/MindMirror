@@ -3,25 +3,38 @@
 {% block title %}Register | MindMirror{% endblock %}
 
 {% block content %}
-<div class="max-w-md mx-auto py-10">
-    <h2 class="text-3xl font-bold text-center text-purple-700 mb-6">Create an Account</h2>
-    <form method="POST" action="{{ url_for('register') }}" class="bg-white p-6 rounded-lg shadow-md space-y-4">
-        <div>
-            <label for="name" class="block font-semibold">Name</label>
-            <input type="text" name="name" required class="w-full p-2 border border-gray-300 rounded">
+<div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-100 via-blue-50 to-pink-100 px-4 py-10">
+    <div class="bg-white shadow-xl rounded-3xl p-10 max-w-md w-full transition-all duration-500 ease-in-out">
+        <div class="text-center mb-8">
+            <img src="{{ url_for('static', filename='calm-icon.svg') }}" alt="MindMirror Logo" class="w-20 h-20 mx-auto mb-4 animate-bounce">
+            <h2 class="text-4xl font-extrabold text-purple-700">Create Your Account</h2>
+            <p class="text-gray-500 text-base mt-1">Start your journey to emotional clarity 🌿</p>
         </div>
-        <div>
-            <label for="email" class="block font-semibold">Email</label>
-            <input type="email" name="email" required class="w-full p-2 border border-gray-300 rounded">
-        </div>
-        <div>
-            <label for="password" class="block font-semibold">Password</label>
-            <input type="password" name="password" required class="w-full p-2 border border-gray-300 rounded">
-        </div>
-        <button type="submit" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 rounded">Register</button>
-        <p class="text-sm text-center mt-2">
-            Already have an account? <a href="{{ url_for('login') }}" class="text-purple-600 font-semibold">Login</a>
-        </p>
-    </form>
+        <form method="POST" action="{{ url_for('register') }}" class="space-y-5">
+            <div>
+                <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                <input type="text" name="name" placeholder="Your full name"
+                    class="w-full p-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-400 transition duration-300 ease-in-out shadow-sm" required>
+            </div>
+            <div>
+                <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                <input type="email" name="email" placeholder="you@example.com"
+                    class="w-full p-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-400 transition duration-300 ease-in-out shadow-sm" required>
+            </div>
+            <div>
+                <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Create Password</label>
+                <input type="password" name="password" placeholder="••••••••"
+                    class="w-full p-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-400 transition duration-300 ease-in-out shadow-sm" required>
+            </div>
+            <button type="submit"
+                class="w-full bg-purple-600 hover:bg-purple-700 text-white text-lg font-semibold py-3 rounded-xl shadow-md transition-all duration-300 ease-in-out hover:shadow-xl">
+                Register
+            </button>
+            <p class="text-sm text-center text-gray-600 mt-3">
+                Already part of MindMirror? 
+                <a href="{{ url_for('login') }}" class="text-purple-600 font-semibold hover:underline">Login here</a>
+            </p>
+        </form>
+    </div>
 </div>
 {% endblock %}

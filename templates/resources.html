@@ -1,41 +1,52 @@
 {% extends "base.html" %}
 
-{% block title %}Mental Health Resources{% endblock %}
+{% block title %}Mental Health Resources | MindMirror{% endblock %}
 
 {% block content %}
-<div class="max-w-4xl mx-auto">
-    <h1 class="text-3xl font-bold text-center text-gray-800 mb-12">Mental Health Resources</h1>
-    
-    <div class="space-y-8">
-        <section class="bg-white rounded-xl shadow-md overflow-hidden p-6">
-            <h2 class="text-2xl font-semibold text-gray-800 mb-4">Self-Care Strategies</h2>
-            <ul class="list-disc pl-5 space-y-2">
-                <li><strong>Mindfulness:</strong> Practice 5-10 minutes of meditation daily</li>
-                <li><strong>Sleep Hygiene:</strong> Maintain consistent sleep schedule</li>
-                <li><strong>Physical Activity:</strong> 30 minutes of movement daily</li>
-                <li><strong>Social Connection:</strong> Reach out to one person daily</li>
-                <li><strong>Journaling:</strong> Write about your thoughts and feelings</li>
-            </ul>
-        </section>
+<div class="min-h-screen bg-gradient-to-br from-pink-50 via-purple-50 to-blue-50 py-12 px-4">
+    <div class="max-w-5xl mx-auto text-gray-800">
+        <h1 class="text-4xl font-bold text-center text-purple-800 mb-12 tracking-wide">🌿 Mental Health Resources</h1>
         
-        <section class="bg-white rounded-xl shadow-md overflow-hidden p-6">
-            <h2 class="text-2xl font-semibold text-gray-800 mb-4">Crisis Support</h2>
-            <div class="space-y-4">
-                <div class="p-4 bg-red-50 rounded-lg">
-                    <h3 class="font-bold text-red-800">If you're in immediate crisis:</h3>
-                    <p>Call your local emergency number or go to the nearest hospital</p>
+        <div class="space-y-12">
+            <!-- Self-Care Strategies -->
+            <section class="bg-white/80 backdrop-blur-md shadow-xl rounded-2xl p-8 border border-purple-100">
+                <h2 class="text-2xl font-semibold text-purple-700 mb-6">✨ Self-Care Strategies</h2>
+                <ul class="list-disc pl-6 space-y-3 text-gray-700 text-lg leading-relaxed">
+                    <li><strong>Mindfulness:</strong> Practice 5-10 minutes of meditation daily to calm your mind.</li>
+                    <li><strong>Sleep Hygiene:</strong> Go to bed and wake up at the same time every day.</li>
+                    <li><strong>Physical Activity:</strong> Try light exercise like walking or yoga for 30 minutes.</li>
+                    <li><strong>Social Connection:</strong> Talk to a friend or loved one regularly.</li>
+                    <li><strong>Journaling:</strong> Express your emotions and thoughts on paper daily.</li>
+                </ul>
+            </section>
+
+            <!-- Crisis Support -->
+            <section class="bg-white/80 backdrop-blur-md shadow-xl rounded-2xl p-8 border border-red-100">
+                <h2 class="text-2xl font-semibold text-red-700 mb-6">🚨 Crisis Support</h2>
+                <div class="space-y-6 text-gray-700 text-lg leading-relaxed">
+                    <div class="p-5 bg-red-50 border-l-4 border-red-400 rounded-lg shadow-sm">
+                        <p class="font-bold text-red-700">If you're in immediate crisis:</p>
+                        <p>Call your local emergency number or visit the nearest hospital.</p>
+                    </div>
+
+                    <div>
+                        <h3 class="font-semibold text-purple-700">📍 United States</h3>
+                        <p>National Suicide Prevention Lifeline: <span class="font-mono font-bold text-gray-800">988</span></p>
+                        <p>Crisis Text Line: Text <span class="font-mono font-bold">HOME</span> to <span class="font-mono font-bold">741741</span></p>
+                    </div>
+
+                    <div>
+                        <h3 class="font-semibold text-purple-700">🌐 International</h3>
+                        <p>Find local support at 
+                            <a href="https://www.iasp.info/resources/Crisis_Centres/" target="_blank" 
+                               class="text-blue-600 underline hover:text-blue-800 transition">
+                               IASP Crisis Centers
+                            </a>
+                        </p>
+                    </div>
                 </div>
-                <div>
-                    <h3 class="font-bold">United States:</h3>
-                    <p>National Suicide Prevention Lifeline: <span class="font-mono">988</span></p>
-                    <p>Crisis Text Line: Text <span class="font-mono">HOME</span> to <span class="font-mono">741741</span></p>
-                </div>
-                <div>
-                    <h3 class="font-bold">International:</h3>
-                    <p>Find your local crisis line at <a href="https://www.iasp.info/resources/Crisis_Centres/" class="text-purple-600 underline">IASP</a></p>
-                </div>
-            </div>
-        </section>
+            </section>
+        </div>
     </div>
 </div>
 {% endblock %}

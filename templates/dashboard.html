@@ -1,32 +1,44 @@
 {% extends "base.html" %}
 
-{% block title %}My Dashboard{% endblock %}
+{% block title %}My Dashboard | MindMirror{% endblock %}
 
 {% block content %}
-<div class="max-w-4xl mx-auto py-10">
-    <h1 class="text-3xl font-bold text-center text-gray-800 mb-8">Your Past Assessments</h1>
+<div class="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 py-12 px-4">
+  <div class="max-w-4xl mx-auto bg-white rounded-3xl shadow-xl p-8">
+    <h1 class="text-3xl font-extrabold text-center text-purple-800 mb-6 tracking-tight">
+      📊 Your Past Assessments
+    </h1>
 
     {% if assessments %}
-        <table class="w-full text-left border border-gray-300 rounded-lg shadow">
-            <thead class="bg-gray-100 text-gray-700">
-                <tr>
-                    <th class="p-3">Date</th>
-                    <th class="p-3">Score</th>
-                    <th class="p-3">Level</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for assess in assessments %}
-                <tr class="border-t">
-                    <td class="p-3">{{ assess[3] }}</td>
-                    <td class="p-3">{{ assess[1] }}</td>
-                    <td class="p-3 font-semibold">{{ assess[2] }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+    <div class="overflow-x-auto">
+      <table class="w-full text-left border border-gray-200 rounded-xl shadow-sm">
+        <thead class="bg-purple-100 text-purple-800 text-sm uppercase">
+          <tr>
+            <th class="p-4">🗓️ Date</th>
+            <th class="p-4">📈 Score</th>
+            <th class="p-4">📊 Level</th>
+          </tr>
+        </thead>
+        <tbody class="bg-white text-gray-700">
+          {% for assess in assessments %}
+          <tr class="border-t border-gray-200 hover:bg-purple-50 transition">
+            <td class="p-4 font-medium">{{ assess[3] }}</td>
+            <td class="p-4">{{ assess[1] }}</td>
+            <td class="p-4 font-semibold text-purple-700">{{ assess[2] }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
     {% else %}
-        <p class="text-center text-gray-600">No assessments found. Take your first test <a href="{{ url_for('assessment') }}" class="text-blue-600 underline">here</a>.</p>
+    <div class="text-center mt-8 text-gray-600">
+      <p class="text-lg">No assessments found yet.</p>
+      <a href="{{ url_for('assessment') }}"
+        class="mt-4 inline-block bg-purple-600 text-white font-medium px-6 py-2 rounded-lg shadow hover:bg-purple-700 transition">
+        ➕ Take Your First Assessment
+      </a>
+    </div>
     {% endif %}
+  </div>
 </div>
 {% endblock %}

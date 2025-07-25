@@ -12,21 +12,22 @@
 
         <form method="POST" id="assessmentForm">
             {% for question in questions %}
-            <div class="question-step" {% if not loop.first %}style="display: none;"{% endif %}>
-                <h2 class="text-2xl font-bold text-gray-800 mb-6">{{ loop.index }}. {{ question }}</h2>
+            {% set outer_loop = loop %}
+            <div class="question-step" {% if not outer_loop.first %}style="display: none;"{% endif %}>
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">{{ outer_loop.index }}. {{ question }}</h2>
                 <div class="space-y-4">
                     {% set options = ['Not at all', 'Several days', 'More than half the days', 'Nearly every day'] %}
                     {% for option in options %}
                     <label class="flex items-center space-x-3 p-3 bg-purple-50 rounded-lg hover:bg-purple-100 transition">
-                        <input type="radio" name="q{{ loop.index0 }}" value="{{ loop.index0 }}" class="h-4 w-4 text-purple-600" required>
+                        <input type="radio" name="q{{ outer_loop.index0 }}" value="{{ loop.index0 }}" class="h-4 w-4 text-purple-600" required>
                         <span class="text-gray-800">{{ option }}</span>
                     </label>
                     {% endfor %}
                 </div>
                 <div class="flex justify-between mt-8">
-                    <button type="button" class="prev-btn text-purple-600 hover:underline" {% if loop.first %}style="visibility: hidden;"{% endif %}>← Back</button>
+                    <button type="button" class="prev-btn text-purple-600 hover:underline" {% if outer_loop.first %}style="visibility: hidden;"{% endif %}>← Back</button>
                     <button type="button" class="next-btn bg-purple-600 text-white px-6 py-2 rounded-full hover:bg-purple-700 transition">
-                        {% if loop.last %}Submit{% else %}Next →{% endif %}
+                        {% if outer_loop.last %}Submit{% else %}Next →{% endif %}
                     </button>
                 </div>
             </div>

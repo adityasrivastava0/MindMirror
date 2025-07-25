@@ -237,7 +237,6 @@ def download_pdf():
     if 'user_id' not in session or 'results' not in session:
         return redirect(url_for('login'))
 
-    # Get user info for personalization
     with sqlite3.connect('mindmirror.db') as conn:
         c = conn.cursor()
         c.execute("SELECT name, email FROM users WHERE id = ?", (session['user_id'],))
@@ -245,7 +244,7 @@ def download_pdf():
         user_name = user[0] if user else "Unknown"
         user_email = user[1] if user else "Unknown"
 
-    html = render_template('results.html',
+    html = render_template('pdf_template.html',
                            score=session['results']['score'],
                            level=session['results']['level'],
                            analysis=session['results']['analysis'],
@@ -253,11 +252,24 @@ def download_pdf():
                            now=datetime.now(),
                            user_name=user_name,
                            user_email=user_email)
-    pdf = pdfkit.from_string(html, False, configuration=config, options={'enable-local-file-access': ''})
+
+    options = {
+        'enable-local-file-access': '',
+        'page-size': 'A4',
+        'margin-top': '0.75in',
+        'margin-right': '0.75in',
+        'margin-bottom': '0.75in',
+        'margin-left': '0.75in',
+        'encoding': 'UTF-8',
+        'no-outline': None
+    }
+
+    pdf = pdfkit.from_string(html, False, configuration=config, options=options)
     response = make_response(pdf)
     response.headers['Content-Type'] = 'application/pdf'
     response.headers['Content-Disposition'] = f'attachment; filename=MindMirror_Report_{user_name}.pdf'
     return response
+
 
 @app.route('/resources')
 def resources():

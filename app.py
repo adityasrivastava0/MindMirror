@@ -270,7 +270,6 @@ def download_pdf():
     response.headers['Content-Disposition'] = f'attachment; filename=MindMirror_Report_{user_name}.pdf'
     return response
 
-
 @app.route('/resources')
 def resources():
     return render_template('resources.html')

@@ -1,15 +1,82 @@
+<!-- filepath: e:\Mindmirror python full stack\templates\mood.html -->
 {% extends "base.html" %}
-{% block title %}Mood Tracker{% endblock %}
+{% block title %}Mood Tracker | MindMirror{% endblock %}
+
 {% block content %}
-<div class="max-w-xl mx-auto mt-10 bg-white/90 rounded-2xl shadow-lg p-8">
-  <h2 class="text-xl font-bold text-[#5C6BC0] mb-4">Mood Tracker</h2>
-  <div class="grid grid-cols-7 gap-2">
-    {% for day in calendar %}
-      <div class="w-10 h-10 flex items-center justify-center rounded-full
-                  {% if day.mood == 'happy' %}bg-[#A5D6A7]{% elif day.mood == 'neutral' %}bg-[#FFF8E1]{% else %}bg-[#F8BBD0]{% endif %}">
-        <span class="text-2xl">{{ day.emoji }}</span>
-      </div>
-    {% endfor %}
-  </div>
+<div class="max-w-2xl mx-auto py-10">
+    <h2 class="text-3xl font-bold text-purple-700 mb-6 text-center">🗓️ Your Mood Calendar ({{ year }}-{{ "%02d"|format(month) }})</h2>
+    <div class="bg-white rounded-2xl shadow-lg p-6 mb-8">
+        <div class="grid grid-cols-7 gap-2">
+            {% for day in calendar_days %}
+            <div class="flex flex-col items-center">
+                <span class="text-lg font-semibold text-gray-500">{{ day.date[-2:] }}</span>
+                <span class="text-2xl">{{ day.emoji }}</span>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="mt-4 text-xs text-gray-500 flex gap-4 justify-center">
+            <span>😊 Normal</span>
+            <span>😐 Mild</span>
+            <span>😟 Moderate</span>
+            <span>😢 Severe</span>
+            <span>⬜ No Data</span>
+        </div>
+    </div>
+    <div class="bg-white rounded-2xl shadow-lg p-6">
+        <h3 class="text-xl font-semibold text-purple-700 mb-4 text-center">Monthly Mood Graph</h3>
+        <canvas id="moodChart" height="120"></canvas>
+    </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+const ctx = document.getElementById('moodChart').getContext('2d');
+const moodCounts = {{ mood_counts|tojson }};
+new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['Normal 😊', 'Mild 😐', 'Moderate 😟', 'Severe 😢'],
+        datasets: [{
+            label: 'Days',
+            data: [moodCounts['😊'], moodCounts['😐'], moodCounts['😟'], moodCounts['😢']],
+            backgroundColor: ['#A5D6A7', '#FFF8E1', '#FFD54F', '#F8BBD0'],
+            borderRadius: 8
+        }]
+    },
+    options: {
+        plugins: { legend: { display: false } },
+        scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } }
+    }
+});
+</script>
 {% endblock %}
+
+<!-- filepath: e:\Mindmirror python full stack\templates\base.html -->
+<nav class="bg-white shadow-lg px-4 py-2 flex items-center justify-between">
+    <div class="flex items-center">
+        <img src="{{ url_for('static', filename='calm-icon.svg') }}" alt="MindMirror" class="h-8 w-8 mr-2">
+        <span class="font-bold text-purple-700 text-xl">MindMirror</span>
+    </div>
+    <div class="md:hidden">
+        <button id="menuBtn" class="text-purple-700 focus:outline-none">
+            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M4 6h16M4 12h16M4 18h16"/>
+            </svg>
+        </button>
+    </div>
+    <div id="menuList" class="hidden absolute top-16 left-0 w-full bg-white shadow-lg z-50 flex flex-col md:flex-row md:static md:w-auto md:shadow-none">
+        <a href="{{ url_for('home') }}" class="px-6 py-3 text-purple-700 hover:bg-purple-50">Home</a>
+        <a href="{{ url_for('assessment') }}" class="px-6 py-3 text-purple-700 hover:bg-purple-50">Assessment</a>
+        <a href="{{ url_for('dashboard') }}" class="px-6 py-3 text-purple-700 hover:bg-purple-50">Dashboard</a>
+        <a href="{{ url_for('mood') }}" class="px-6 py-3 text-purple-700 hover:bg-purple-50">Mood Tracker</a>
+        <a href="{{ url_for('resources') }}" class="px-6 py-3 text-purple-700 hover:bg-purple-50">Resources</a>
+        <a href="{{ url_for('logout') }}" class="px-6 py-3 text-purple-700 hover:bg-purple-50">Logout</a>
+    </div>
+</nav>
+<script>
+const menuBtn = document.getElementById('menuBtn');
+const menuList = document.getElementById('menuList');
+menuBtn.addEventListener('click', () => {
+    menuList.classList.toggle('hidden');
+});
+</script>

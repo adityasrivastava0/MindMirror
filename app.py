@@ -295,7 +295,43 @@ def chat():
 
 @app.route('/mood')
 def mood():
-    return render_template('mood.html')
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+
+    # Example: Fetch mood data for current month
+    from calendar import monthrange
+    today = datetime.today()
+    year, month = today.year, today.month
+    days_in_month = monthrange(year, month)[1]
+
+    with sqlite3.connect('mindmirror.db') as conn:
+        c = conn.cursor()
+        c.execute("""
+            SELECT created_at, level FROM assessments
+            WHERE user_id = ? AND strftime('%Y-%m', created_at) = ?
+        """, (session['user_id'], f"{year}-{month:02d}"))
+        rows = c.fetchall()
+
+    # Map date to mood
+    mood_map = {'Normal': '😊', 'Mild': '😐', 'Moderate': '😟', 'Severe': '😢'}
+    mood_data = {row[0][:10]: mood_map.get(row[1], '🙂') for row in rows}
+
+    calendar_days = []
+    for day in range(1, days_in_month + 1):
+        date_str = f"{year}-{month:02d}-{day:02d}"
+        emoji = mood_data.get(date_str, '⬜')
+        calendar_days.append({'date': date_str, 'emoji': emoji})
+
+    # For graph: count moods
+    mood_counts = {'😊': 0, '😐': 0, '😟': 0, '😢': 0}
+    for m in mood_data.values():
+        if m in mood_counts:
+            mood_counts[m] += 1
+
+    return render_template('mood.html',
+                           calendar_days=calendar_days,
+                           year=year, month=month,
+                           mood_counts=mood_counts)
 
 # --------- Run App ---------
 if __name__ == '__main__':

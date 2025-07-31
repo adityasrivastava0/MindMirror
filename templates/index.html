@@ -5,14 +5,22 @@
 {% block content %}
 <div class="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-pink-50 py-14 px-4">
   <div class="max-w-3xl mx-auto text-center">
-    <img src="{{ url_for('static', filename='lotus-calm.svg') }}" alt="MindMirror Logo" class="w-20 h-20 mx-auto mb-5 animate-pulse-slow">
+    <!-- MindMirror Logo -->
+    <img src="{{ url_for('static', filename='images/mirrormind_logo.png') }}"
+         alt="MindMirror Logo"
+         class="w-20 h-20 mx-auto mb-5 animate-pulse-slow">
 
-    <h1 class="text-5xl font-extrabold text-purple-800 mb-3 font-[Nunito]">Welcome to MindMirror</h1>
-    
+    <!-- Heading -->
+    <h1 class="text-5xl font-extrabold text-purple-800 mb-3 font-[Nunito]">
+      Welcome to MindMirror
+    </h1>
+
+    <!-- Subtitle -->
     <p class="text-lg text-gray-700 font-light mb-8">
       Take a moment for yourself. This safe and confidential check-in supports your emotional well-being.
     </p>
 
+    <!-- What to Expect Box -->
     <div class="bg-white rounded-2xl shadow-lg p-8 text-left mb-10 border border-purple-100">
       <h2 class="text-2xl font-semibold text-purple-700 mb-4 flex items-center gap-2">
         🌿 What to Expect
@@ -20,7 +28,9 @@
       <p class="mb-3 text-gray-700">
         This tool is based on the PHQ-9 method, extended to track your emotional state, loneliness, and stress.
       </p>
-      <p class="mb-3 text-gray-700">Takes less than <strong>5 minutes</strong> and provides:</p>
+      <p class="mb-3 text-gray-700">
+        Takes less than <strong>5 minutes</strong> and provides:
+      </p>
       <ul class="list-disc pl-6 space-y-2 text-gray-800">
         <li>💡 Personalized emotional wellness score</li>
         <li>🎯 Tailored mental health suggestions</li>
@@ -28,13 +38,15 @@
       </ul>
     </div>
 
+    <!-- Start Assessment Button -->
     <a href="{{ url_for('assessment') }}"
-      class="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-10 rounded-full text-lg transition-all shadow-md hover:shadow-xl animate-glow-slow">
-      🧠 Start Assessment
+       class="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-10 rounded-full text-lg transition-all shadow-md hover:shadow-xl animate-glow-slow">
+       🧠 Start Assessment
     </a>
   </div>
 </div>
 
+<!-- Animation Styles -->
 <style>
 @keyframes glow {
   0% { box-shadow: 0 0 0px rgba(147, 51, 234, 0.3); }
